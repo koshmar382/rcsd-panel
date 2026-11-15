@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RCSD Control — Панель РКШД</title>
+  <script src="https://tailwindcss.com"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="min-h-screen pb-12">
+
+  <header class="card border-x-0 border-t-0 sticky top-0 z-20 px-4 py-3 flex flex-wrap items-center justify-between gap-3">
+    <div class="flex items-center gap-3">
+      <div class="w-10 h-10 rounded-lg bg-blue-600 flex items-center justify-center font-bold text-white text-lg">SD</div>
+      <div>
+        <h1 class="font-bold text-white text-base">RCSD CONTROL</h1>
+        <p class="text-xs text-slate-400">Red County Sheriff Department</p>
+      </div>
+    </div>
+    <div class="flex items-center gap-2">
+      <span id="roleBadge" class="text-xs px-2.5 py-1 rounded-full bg-slate-800 text-slate-300">Просмотр</span>
+      <button onclick="toggleAdmin()" id="adminBtn" class="text-xs bg-blue-600 text-white font-medium px-3 py-1.5 rounded-lg">Вход 9-10</button>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 mt-6 space-y-6">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+      <div class="card p-4 rounded-xl"><p class="text-xs text-slate-400">Состав</p><p id="statTotal" class="text-2xl font-bold text-white mt-1">0</p></div>
+      <div class="card p-4 rounded-xl"><p class="text-xs text-slate-400">Старшие (7+)</p><p id="statSenior" class="text-2xl font-bold text-blue-400 mt-1">0</p></div>
+      <div class="card p-4 rounded-xl"><p class="text-xs text-slate-400">Выговоры</p><p id="statWarns" class="text-2xl font-bold text-red-400 mt-1">0</p></div>
+      <div class="card p-4 rounded-xl"><p class="text-xs text-slate-400">Премии</p><p id="statBonus" class="text-xl font-bold text-emerald-400 mt-1">$0</p></div>
+    </div>
+
+    <div id="adminPanel" class="hidden card p-4 rounded-xl border-blue-500/40 space-y-3">
+      <div class="flex justify-between items-center">
+        <h2 class="text-xs font-bold text-blue-400 uppercase">Принять сотрудника</h2>
+        <button onclick="resetDemo()" class="text-xs text-slate-400 underline">Сброс</button>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-4 gap-2">
+        <input id="newNick" type="text" placeholder="Nick_Name" class="input-dark">
+        <select id="newRank" class="input-dark">
+          <option value="1">1 — Cadet</option>
+          <option value="2">2 — Deputy I</option>
+          <option value="3">3 — Deputy II</option>
+          <option value="4">4 — Senior Deputy</option>
+          <option value="5">5 — Sergeant</option>
+          <option value="6">6 — Lieutenant</option>
+          <option value="7">7 — Captain</option>
+          <option value="8">8 — Major</option>
+          <option value="9">9 — Undersheriff</option>
+          <option value="10">10 — Sheriff</option>
+        </select>
+        <select id="newDept" class="input-dark">
+          <option value="Academy">Academy</option>
+          <option value="Patrol Division">Patrol Division</option>
+          <option value="Detective Bureau">Detective Bureau</option>
+          <option value="Leadership">Leadership</option>
+        </select>
+        <button onclick="addStaff()" class="bg-emerald-600 text-white font-medium rounded-lg px-4 py-2 text-sm">+ Принять</button>
+      </div>
+    </div>
+
+    <div class="flex flex-col sm:flex-row justify-between gap-3">
+      <div class="flex flex-wrap gap-1.5" id="deptFilters">
+        <button onclick="setFilter('ALL', this)" class="filter-btn active-filter">Все</button>
+        <button onclick="setFilter('Leadership', this)" class="filter-btn">Leadership</button>
+        <button onclick="setFilter('Patrol Division', this)" class="filter-btn">Patrol</button>
+        <button onclick="setFilter('Detective Bureau', this)" class="filter-btn">Detective</button>
+        <button onclick="setFilter('Academy', this)" class="filter-btn">Academy</button>
+      </div>
+      <input id="searchInput" oninput="render()" type="text" placeholder="Поиск по нику..." class="input-dark">
+    </div>
+
+    <div class="card rounded-xl overflow-hidden">
+      <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse">
+          <thead>
+            <tr class="border-b border-slate-800 text-xs text-slate-400 uppercase bg-slate-900/50">
+              <th class="py-3 px-4">Ник</th>
+              <th class="py-3 px-4">Ранг</th>
+              <th class="py-3 px-4">Отдел</th>
+              <th class="py-3 px-4">Наказания</th>
+              <th class="py-3 px-4">Премия</th>
+              <th class="py-3 px-4 text-right admin-col hidden">Действия</th>
+            </tr>
+          </thead>
+          <tbody id="staffTable" class="divide-y divide-slate-800/70 text-sm"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card rounded-xl p-4">
+      <h3 class="text-sm font-semibold text-white mb-2">Лог действий</h3>
+      <div id="actionLogs" class="space-y-1.5 text-xs text-slate-400 max-h-40 overflow-y-auto"></div>
+    </div>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
