@@ -7,13 +7,8 @@ const RANKS = {
   5: "Sergeant", 6: "Lieutenant", 7: "Captain", 8: "Major", 9: "Undersheriff", 10: "Sheriff"
 };
 
-const defaultStaff = [
-  { id: 1, nick: "Connor_Vance", rank: 10, dept: "Leadership", warns: 0, preds: 0, bonus: 0 },
-  { id: 2, nick: "Marcus_Holloway", rank: 9, dept: "Leadership", warns: 0, preds: 1, bonus: 500000 },
-  { id: 3, nick: "Alex_Mercer", rank: 7, dept: "Detective Bureau", warns: 1, preds: 0, bonus: 1200000 },
-  { id: 4, nick: "Liam_Kensington", rank: 4, dept: "Patrol Division", warns: 0, preds: 0, bonus: 350000 },
-  { id: 5, nick: "Ethan_Hunt", rank: 1, dept: "Academy", warns: 0, preds: 1, bonus: 0 }
-];
+const defaultStaff = [];
+
 
 let staff = JSON.parse(localStorage.getItem('rcsd_staff')) || defaultStaff;
 let logs = JSON.parse(localStorage.getItem('rcsd_logs')) || ["Система запущена. Пин-код 9-10: 2026"];
